@@ -84,7 +84,7 @@ const CreateInvoice = () => {
     postalCode: ''
   });
 
-  const [selectedChain, setSelectedChain] = useState('bnb');
+  const [selectedCurrency, setSelectedCurrency] = useState('usdc');
 
   const [products, setProducts] = useState([
     {
@@ -95,16 +95,52 @@ const CreateInvoice = () => {
     }
   ]);
 
-  const chains = [
+  const currencies = [
     {
-      id: 'bnb',
-      name: 'BNB Chain',
+      id: 'usdc',
+      name: 'USDC',
+      symbol: 'USDC',
       icon: (
         <svg className="w-5 h-5" viewBox="0 0 32 32" fill="none">
-          <path d="M16 32C24.8366 32 32 24.8366 32 16C32 7.16344 24.8366 0 16 0C7.16344 0 0 7.16344 0 16C0 24.8366 7.16344 32 16 32Z" fill="#F3BA2F"/>
-          <path d="M12.116 14.404L16 10.52L19.886 14.406L22.146 12.146L16 6L9.856 12.144L12.116 14.404Z" fill="white"/>
-          <path d="M16 21.48L12.116 17.596L9.856 19.856L16 26L22.146 19.854L19.886 17.594L16 21.48Z" fill="white"/>
-          <path d="M16 18.194L18.194 16L16 13.806L13.806 16L16 18.194Z" fill="white"/>
+          <circle cx="16" cy="16" r="16" fill="#2775CA"/>
+          <path d="M16 4C9.373 4 4 9.373 4 16s5.373 12 12 12 12-5.373 12-12S22.627 4 16 4zm0 22C10.486 26 6 21.514 6 16S10.486 6 16 6s10 4.486 10 10-4.486 10-10 10z" fill="white"/>
+          <path d="M16 8c-4.418 0-8 3.582-8 8s3.582 8 8 8 8-3.582 8-8-3.582-8-8-8zm0 14c-3.314 0-6-2.686-6-6s2.686-6 6-6 6 2.686 6 6-2.686 6-6 6z" fill="white"/>
+        </svg>
+      )
+    },
+    {
+      id: 'weth',
+      name: 'WETH',
+      symbol: 'WETH',
+      icon: (
+        <svg className="w-5 h-5" viewBox="0 0 32 32" fill="none">
+          <circle cx="16" cy="16" r="16" fill="#627EEA"/>
+          <path d="M16 4L9 16.5L16 29L23 16.5L16 4Z" fill="white"/>
+          <path d="M16 6.5L12 16.5L16 26.5L20 16.5L16 6.5Z" fill="#627EEA"/>
+        </svg>
+      )
+    },
+    {
+      id: 'usdt',
+      name: 'USDT',
+      symbol: 'USDT',
+      icon: (
+        <svg className="w-5 h-5" viewBox="0 0 32 32" fill="none">
+          <circle cx="16" cy="16" r="16" fill="#26A17B"/>
+          <path d="M16 4C9.373 4 4 9.373 4 16s5.373 12 12 12 12-5.373 12-12S22.627 4 16 4zm0 22C10.486 26 6 21.514 6 16S10.486 6 16 6s10 4.486 10 10-4.486 10-10 10z" fill="white"/>
+          <path d="M16 8c-4.418 0-8 3.582-8 8s3.582 8 8 8 8-3.582 8-8-3.582-8-8-8zm0 14c-3.314 0-6-2.686-6-6s2.686-6 6-6 6 2.686 6 6-2.686 6-6 6z" fill="white"/>
+        </svg>
+      )
+    },
+    {
+      id: 'xtz',
+      name: 'XTZ',
+      symbol: 'XTZ',
+      icon: (
+        <svg className="w-5 h-5" viewBox="0 0 32 32" fill="none">
+          <circle cx="16" cy="16" r="16" fill="#2C7DF7"/>
+          <path d="M16 4C9.373 4 4 9.373 4 16s5.373 12 12 12 12-5.373 12-12S22.627 4 16 4zm0 22C10.486 26 6 21.514 6 16S10.486 6 16 6s10 4.486 10 10-4.486 10-10 10z" fill="white"/>
+          <path d="M16 8c-4.418 0-8 3.582-8 8s3.582 8 8 8 8-3.582 8-8-3.582-8-8-8zm0 14c-3.314 0-6-2.686-6-6s2.686-6 6-6 6 2.686 6 6-2.686 6-6 6z" fill="white"/>
         </svg>
       )
     }
@@ -150,6 +186,15 @@ const CreateInvoice = () => {
     }, 0).toFixed(2);
   };
 
+  const getCurrencySymbol = () => {
+    const selectedCurrencyData = currencies.find(c => c.id === selectedCurrency);
+    return selectedCurrencyData?.symbol || 'USD';
+  };
+
+  const getNetworkName = () => {
+    return 'EtherLink-Testnet';
+  };
+
   const connectWallet = async () => {
     // Implement wallet connection logic here
     alert('Wallet connection will be implemented');
@@ -174,14 +219,14 @@ const CreateInvoice = () => {
       const body = `
 Dear ${clientInfo.firstName} ${clientInfo.lastName},
 
-Please find attached the invoice for the amount of $${calculateTotal()}.
+Please find attached the invoice for the amount of ${getCurrencySymbol()} ${calculateTotal()}.
 
 Invoice Details:
 ${products.map(product => 
-  `- ${product.name}: ${product.quantity} x $${product.price} = $${(product.quantity * product.price).toFixed(2)}`
+  `- ${product.name}: ${product.quantity} x ${getCurrencySymbol()} ${product.price} = ${getCurrencySymbol()} ${(product.quantity * product.price).toFixed(2)}`
 ).join('\n')}
 
-Total Amount: $${calculateTotal()}
+Total Amount: ${getCurrencySymbol()} ${calculateTotal()}
 
 Best regards,
 ${sellerInfo.firstName} ${sellerInfo.lastName}
@@ -249,6 +294,13 @@ ${sellerInfo.companyName}
                     </button>
                   )}
                 </div>
+                {address && (
+                  <div className="mt-2 p-2 bg-emerald-50 border border-emerald-200 rounded-lg">
+                    <p className="text-sm text-emerald-700 font-medium">
+                      Connected to {getNetworkName()}
+                    </p>
+                  </div>
+                )}
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -327,17 +379,38 @@ ${sellerInfo.companyName}
             >
               <h2 className="text-xl font-semibold mb-4 text-emerald-700">Client Information</h2>
               
-              {/* Chain Selector */}
+              {/* Currency Selector */}
               <div className="mb-6">
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Blockchain Network
+                  Select Currency
                 </label>
-                <div className="p-3 rounded-xl border-2 border-emerald-500 bg-emerald-50">
+                <div className="relative">
+                  <select
+                    value={selectedCurrency}
+                    onChange={(e) => setSelectedCurrency(e.target.value)}
+                    className="w-full p-3 rounded-xl border-2 border-emerald-500 bg-emerald-50 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent appearance-none cursor-pointer"
+                  >
+                    {currencies.map((currency) => (
+                      <option key={currency.id} value={currency.id} className="flex items-center gap-3 p-2">
+                        {currency.symbol}
+                      </option>
+                    ))}
+                  </select>
+                  <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                    <svg className="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </div>
+                </div>
+                {/* Selected Currency Display */}
+                <div className="mt-2 p-3 rounded-xl border border-emerald-200 bg-emerald-25">
                   <div className="flex items-center gap-3">
-                    {chains[0].icon}
+                    {currencies.find(c => c.id === selectedCurrency)?.icon}
                     <div className="text-left">
-                      <p className="font-semibold text-gray-900">{chains[0].name}</p>
-                      <p className="text-xs text-gray-500">Selected</p>
+                      <p className="font-semibold text-gray-900">
+                        {currencies.find(c => c.id === selectedCurrency)?.symbol}
+                      </p>
+                      <p className="text-xs text-gray-500">Selected Currency</p>
                     </div>
                     <div className="ml-auto">
                       <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
@@ -482,7 +555,7 @@ ${sellerInfo.companyName}
                         
                         <input
                           type="number"
-                          placeholder="Price per unit"
+                          placeholder={`Price per unit (${getCurrencySymbol()})`}
                           value={product.price}
                           onChange={(e) => handleProductChange(index, 'price', e.target.value)}
                           className="input-field"
@@ -491,7 +564,7 @@ ${sellerInfo.companyName}
                       
                       <div className="flex items-center justify-end md:col-span-2">
                         <p className="text-gray-600">
-                          Subtotal: <span className="font-semibold">${(product.price * product.quantity || 0).toFixed(2)}</span>
+                          Subtotal: <span className="font-semibold">{getCurrencySymbol()} {(product.price * product.quantity || 0).toFixed(2)}</span>
                         </p>
                       </div>
                     </div>
@@ -514,7 +587,7 @@ ${sellerInfo.companyName}
                   <div className="flex justify-between items-center mb-4">
                     <span className="text-lg font-semibold text-gray-700">Total Amount:</span>
                     <span className="text-2xl font-bold text-emerald-600"
-                    onClick={handleChange}>${calculateTotal()}</span>
+                    onClick={handleChange}>{getCurrencySymbol()} {calculateTotal()}</span>
                   </div>
                   
                   <motion.button
@@ -680,9 +753,9 @@ ${sellerInfo.companyName}
                         <td className="py-2">{product.name || 'Product Name'}</td>
                         <td className="py-2">{product.description || 'Description'}</td>
                         <td className="py-2">{product.quantity}</td>
-                        <td className="py-2">${product.price || '0.00'}</td>
+                        <td className="py-2">{getCurrencySymbol()} {product.price || '0.00'}</td>
                         <td className="py-2 text-right">
-                          ${(product.price * product.quantity || 0).toFixed(2)}
+                          {getCurrencySymbol()} {(product.price * product.quantity || 0).toFixed(2)}
                         </td>
                       </tr>
                     ))}
@@ -693,7 +766,7 @@ ${sellerInfo.companyName}
                 <div className="flex justify-end border-t pt-4">
                   <div className="text-right">
                     <p className="text-lg font-bold">
-                      Total Amount: <span className="text-emerald-600">${calculateTotal()}</span>
+                      Total Amount: <span className="text-emerald-600">{getCurrencySymbol()} {calculateTotal()}</span>
                     </p>
                   </div>
                 </div>
