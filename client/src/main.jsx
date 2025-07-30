@@ -8,7 +8,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { getDefaultConfig, RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import '@rainbow-me/rainbowkit/styles.css';
 
-// Configure for BSC Testnet
+
 const config = getDefaultConfig({
   appName: 'Ether-Voice',
   projectId: 'e7fa7d19fd057ecd9403a0e89bd62b8b', // Your project ID

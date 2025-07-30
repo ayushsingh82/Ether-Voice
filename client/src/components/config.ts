@@ -1,14 +1,14 @@
 import { createPublicClient, createWalletClient, custom, http} from 'viem'
 import { privateKeyToAccount } from 'viem/accounts'
-import { opBNBTestnet , bscTestnet } from 'viem/chains'
+import {  etherlinkTestnet } from 'viem/chains'
  
 export const publicClient = createPublicClient({
-  chain: bscTestnet,
+  chain: etherlinkTestnet,
   transport: http()
 })
  
 export const walletClient = createWalletClient({
-  chain: bscTestnet,
+  chain: etherlinkTestnet,
   transport: custom(window.ethereum)
 })
  
