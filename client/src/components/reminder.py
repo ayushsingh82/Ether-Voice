@@ -189,7 +189,7 @@ class InvoiceReminder:
                 <p><strong>Payment Instructions:</strong></p>
                 <ul>
                     <li>Please ensure you have sufficient BNB in your wallet</li>
-                    <li>Connect your wallet to the BNB Chain network</li>
+                    <li>Connect your wallet to the Etherlink Chain network</li>
                     <li>Complete the payment through the invoice portal</li>
                 </ul>
                 
@@ -197,7 +197,7 @@ class InvoiceReminder:
                 
                 <p>If you have any questions, please don't hesitate to contact us.</p>
                 
-                <p>Best regards,<br>BNB Invoice Team</p>
+                <p>Best regards,<br>Ether-Invoice Team</p>
             </div>
             
             <div class="footer">
