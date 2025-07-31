@@ -188,7 +188,7 @@ class InvoiceReminder:
                 
                 <p><strong>Payment Instructions:</strong></p>
                 <ul>
-                    <li>Please ensure you have sufficient BNB in your wallet</li>
+                    <li>Please ensure you have sufficient xtz in your wallet</li>
                     <li>Connect your wallet to the Etherlink Chain network</li>
                     <li>Complete the payment through the invoice portal</li>
                 </ul>
